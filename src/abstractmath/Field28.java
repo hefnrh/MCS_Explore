@@ -2,7 +2,7 @@ package abstractmath;
 
 public final class Field28 {
 	
-	final byte p;
+	private final byte p;
 	
 	/**
 	 * @param identifier an 8-bit number identified the first eight coefficients of
