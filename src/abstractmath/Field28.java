@@ -32,10 +32,10 @@ public final class Field28 {
 	
 	public final byte rotateLeft(byte a) {
 		byte ret = a;
-		a = (byte) (((a >>> 7) == 0) ? 0b0 : -0b1);
+		a = (byte) ((((a >> 7) & 0b1) == 0) ? 0b0 : -0b1);
 		ret ^= (a & p);
 		ret <<= 1;
-		ret |= (a >>> 7) & 0b1;
+		ret |= (a >> 7) & 0b1;
 		return ret;
 	}
 	
