@@ -30,7 +30,7 @@ public final class Field28 {
 		return ret;
 	}
 	
-	public final byte rotateLeft(byte a) {
+	private final byte rotateLeft(byte a) {
 		byte ret = a;
 		a = (byte) ((((a >> 7) & 0b1) == 0) ? 0b0 : -0b1);
 		ret ^= (a & p);
