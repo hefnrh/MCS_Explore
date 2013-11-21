@@ -1,51 +1,15 @@
+package tools;
+
 import java.util.concurrent.CountDownLatch;
 
 import abstractmath.Field28;
 
-class Counter {
-	private long start;
-	private long end;
-	public void setStart() {
-		start = System.currentTimeMillis();
-	}
-	
-	public void setEnd() {
-		synchronized (this) {
-			end = System.currentTimeMillis();
-		}
-	}
-	
-	public long getTime() {
-		return end - start;
-	}
-}
-class MultiThreadTest extends Thread {
-	private CountDownLatch cdl;
-	private Counter counter;
-	private int times;
-	private Field28 field;
-	private byte minus1 = -1;
-	private byte b  = 123;
-	public MultiThreadTest(Counter c, int times, Field28 f, CountDownLatch cdl) {
-		counter = c;
-		this.times = times;
-		field = f;
-		this.cdl = cdl;
-	}
-	@Override
-	public void run() {
-		for (int i = 0; i < times; ++i)
-			b = field.multiply(b, minus1);
-		counter.setEnd();
-		cdl.countDown();
-	}
-}
 public class Test {
 	public static void main(String[] args) {
 		singleThread();
 		multiThread(2);
 	}
-	public static void multiThread(int n) {
+	public static final void multiThread(int n) {
 		System.out.println("-----------test multiple thread------------");
 		byte p = 0b0001110;
 		p |= -128;
@@ -65,7 +29,7 @@ public class Test {
 			e.printStackTrace();
 		}
 	}
-	public static void singleThread() {
+	public static final void singleThread() {
 		System.out.println("-----------test single thread------------");
 		byte b = 0b001110;
 		b |= -128;
