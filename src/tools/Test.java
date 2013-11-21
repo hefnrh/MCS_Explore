@@ -7,7 +7,8 @@ import abstractmath.Field28;
 public class Test {
 	public static void main(String[] args) {
 		singleThread();
-		multiThread(2);
+		int n = Integer.parseInt(args[0]);
+		multiThread(n);
 	}
 	public static final void multiThread(int n) {
 		System.out.println("-----------test multiple thread------------");
