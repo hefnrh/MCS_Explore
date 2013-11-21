@@ -7,8 +7,8 @@ import abstractmath.Field28;
 public class MultiThreadTest extends Thread {
 	private CountDownLatch cdl;
 	private Counter counter;
-	private int times;
-	private Field28 field;
+	private final int times;
+	private final Field28 field;
 	private byte minus1 = -1;
 	private byte b  = 123;
 	public MultiThreadTest(Counter c, int times, Field28 f, CountDownLatch cdl) {
