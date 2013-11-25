@@ -5,11 +5,11 @@ import java.util.concurrent.CountDownLatch;
 import abstractmath.Field28;
 
 public class MultiThreadTest extends Thread {
-	private CountDownLatch cdl;
-	private Counter counter;
+	private final CountDownLatch cdl;
+	private final Counter counter;
 	private final int times;
 	private final Field28 field;
-	private byte minus1 = -1;
+	private final byte minus1 = -1;
 	private byte b  = 123;
 	public MultiThreadTest(Counter c, int times, Field28 f, CountDownLatch cdl) {
 		counter = c;

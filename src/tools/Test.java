@@ -6,7 +6,7 @@ import abstractmath.Field28;
 
 public class Test {
 	public static void main(String[] args) {
-		singleThread();
+		multiThread(1);
 		int n = Integer.parseInt(args[0]);
 		multiThread(n);
 	}
@@ -46,7 +46,7 @@ public class Test {
 		}
 		long end = System.currentTimeMillis();
 		System.out.println("after multiply b = " + toBin(b));
-		System.out.println("time used for 100000 mutiply: " + (end - start) + " ms");
+		System.out.println("time used for 1000000 mutiply: " + (end - start) + " ms");
 	}
 	public static final String toBin(byte b) {
 		StringBuilder sb = new StringBuilder();
