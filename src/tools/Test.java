@@ -6,9 +6,10 @@ import abstractmath.Field28;
 
 public class Test {
 	public static void main(String[] args) {
-		multiThread(1);
-		int n = Integer.parseInt(args[0]);
-		multiThread(n);
+//		multiThread(1);
+//		int n = Integer.parseInt(args[0]);
+//		multiThread(n);
+		mixTest(1 << 24);
 	}
 	public static final void multiThread(int n) {
 		System.out.println("-----------test multiple thread------------");
@@ -54,5 +55,24 @@ public class Test {
 			sb.append((b >> (7 - i)) & 1);
 		}
 		return sb.toString();
+	}
+	
+	public static final void mixTest(final int n) {
+		final byte[][] matrix = {
+				{ 2, 3, 1, 1 },
+				{ 1, 2, 3, 1 },
+				{ 1, 1, 2, 3 },
+				{ 3, 1, 1, 2 }
+		};
+		final byte p = (byte) 0b10001101;
+		final Field28 f = new Field28(p);
+		byte[] data = new byte[4];
+		data[0] = data[1] = data[2] = data[3] = 0;
+		long start = System.currentTimeMillis();
+		for (int i = 0; i < n; ++i) {
+			data = f.AESMixColumns(matrix, data);
+		}
+		long end = System.currentTimeMillis();
+		System.out.println(n + " times " + "time used: " + (end - start) + " ms");
 	}
 }
