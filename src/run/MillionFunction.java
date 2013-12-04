@@ -54,10 +54,9 @@ public class MillionFunction {
 		float simpleTime = 0;
 
 		for (int i = 0; i < runTime; ++i) {
-                        createA();
-                        //create Y
-			int answer0 = x ^ xFunction;
-			int answer1 = y ^ yFunction;
+                        createY(createA());
+			int answer0 = x & xFunction;
+			int answer1 = y & yFunction;
 			byte sign0 = 0,sign1 = 0;
 			for (int j = 0; j < 32; ++j) {
 				if((answer0 & 1) ==1) ++sign0;
@@ -92,7 +91,6 @@ public class MillionFunction {
 
 	final public void runFuctions(int runTime, int FunctionNmubers) {
 		for (int k = 0; k < FunctionNmubers; ++k) {
-			createY(createA());
 			createFunctions();
 			sort(calcDeviation(runTime));
 		}
