@@ -54,14 +54,18 @@ public class MillionFunction {
 		float simpleTime = 0;
 
 		for (int i = 0; i < runTime; ++i) {
-
+                        createA();
+                        //create Y
 			int answer0 = x ^ xFunction;
 			int answer1 = y ^ yFunction;
+			byte sign0 = 0,sign1 = 0;
 			for (int j = 0; j < 32; ++j) {
+				if((answer0 & 1) ==1) ++sign0;
+    			        if((answer1 & 1) ==1) ++sign1;
 				answer0 >>= 1;
 				answer1 >>= 1;
 			}
-			if (((answer0 + answer1) & 1) == 1)
+			if (((sign0 + sign1) & 1) == 1)
 				++simpleTime;
 		}
 		return Math.abs(simpleTime / runTime - (float) 0.5);
