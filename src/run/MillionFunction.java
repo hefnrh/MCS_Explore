@@ -112,9 +112,9 @@ final public class MillionFunction implements Runnable {
 
 	final public double calcDeviation(final int runTime) {
 		double simpleTime = 0;
-
+                
 		for (int i = 0; i < runTime; ++i) {
-
+                        createY(createA());
 			int answer0 = x ^ xFunction;
 			int answer1 = y ^ yFunction;
 			byte sign0 = 0, sign1 = 0;
@@ -162,7 +162,7 @@ final public class MillionFunction implements Runnable {
 
 	final public void runFuctions() {
 		for (int k = 0; k < FunctionNumbers; ++k) {
-			createY(createA());
+			
 			createFunctions(k);
 			sort(calcDeviation(runTime));
 		}
