@@ -11,12 +11,8 @@ public class MillionFunction {
 	private float[] deviation;
 	final Random r = new Random();
 	final Field28 field = new Field28((byte) 0b1000_1101);
-	final byte[][] matrix = {
-			{ 2, 3, 1, 1 },
-			{ 1, 2, 3, 1 },
-			{ 1, 1, 2, 3 },
-			{ 3, 1, 1, 2 }
-	};
+	final byte[][] matrix = { { 2, 3, 1, 1 }, { 1, 2, 3, 1 }, { 1, 1, 2, 3 },
+			{ 3, 1, 1, 2 } };
 
 	final private byte[] createA() { // create a0~a3
 
@@ -29,6 +25,7 @@ public class MillionFunction {
 		}
 		return a;
 	}
+
 	final private void createY(byte[] a) {
 		byte[] out = field.AESMixColumns(matrix, a);
 		y = out[0] & 0b1111_1111;
@@ -50,24 +47,27 @@ public class MillionFunction {
 		System.out.println("y = " + y);
 	}
 
-	final public float calcDeviation(int runTime) {
-		float simpleTime = 0;
+	final public double calcDeviation(int runTime) {
+		double simpleTime = 0;
 
 		for (int i = 0; i < runTime; ++i) {
-
-			int answer0 = x ^ xFunction;
-			int answer1 = y ^ yFunction;
+                        createY(createA());
+			int answer0 = x & xFunction;
+			int answer1 = y & yFunction;
+			byte sign0 = 0,sign1 = 0;
 			for (int j = 0; j < 32; ++j) {
+				if((answer0 & 1) ==1) ++sign0;
+    			        if((answer1 & 1) ==1) ++sign1;
 				answer0 >>= 1;
 				answer1 >>= 1;
 			}
-			if (((answer0 + answer1) & 1) == 1)
+			if (((sign0 + sign1) & 1) == 1)
 				++simpleTime;
 		}
-		return Math.abs(simpleTime / runTime - (float) 0.5);
+		return Math.abs(simpleTime / runTime - 0.5);
 	}
 
-	final void sort(float deviationx) {
+	final void sort(double deviationx) {
 
 		int i = 0;
 		while (i < 10) {
@@ -79,7 +79,7 @@ public class MillionFunction {
 				}
 				highRankXFunction[i] = xFunction;
 				highRankYFunction[i] = yFunction;
-				deviation[i] = deviationx;
+				deviation[i] = (float) deviationx;
 			}
 			++i;
 		}
@@ -88,7 +88,6 @@ public class MillionFunction {
 
 	final public void runFuctions(int runTime, int FunctionNmubers) {
 		for (int k = 0; k < FunctionNmubers; ++k) {
-			createY(createA());
 			createFunctions();
 			sort(calcDeviation(runTime));
 		}
