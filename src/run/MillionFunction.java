@@ -8,7 +8,7 @@ public class MillionFunction {
 	private int xFunction = 0, yFunction = 0;
 	private int x = 0, y = 0;
 	private int[] highRankXFunction, highRankYFunction;
-	private float[] deviation;
+	private double[] deviation;
 	final Random r = new Random();
 	final Field28 field = new Field28((byte) 0b1000_1101);
 	final byte[][] matrix = { { 2, 3, 1, 1 }, { 1, 2, 3, 1 }, { 1, 1, 2, 3 },
