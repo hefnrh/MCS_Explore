@@ -76,7 +76,7 @@ final public class MillionFunction implements Runnable {
 				if (k % 8 == 0) {
 					xFunction = 0b00000001000000010000000000000001;
 				} else {
-					xFunction = 0b00000010000000110000000100000001;
+					xFunction = 0b00000010000000110000000100000010;
 					xFunction <<= ((k % 8) - 1);
 				}
 				break;
@@ -84,7 +84,7 @@ final public class MillionFunction implements Runnable {
 				if (k % 8 == 0) {
 					xFunction = 0b00000001000000000000000100000001;
 				} else {
-					xFunction = 0b00000011000000100000000100000001;
+					xFunction = 0b00000011000000010000001000000010;
 					xFunction <<= ((k % 8) - 1);
 				}
 				break;
