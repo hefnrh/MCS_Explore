@@ -56,8 +56,8 @@ final public class MillionFunction implements Runnable {
 		y |= (out[3] & 0b1111_1111) << 24;
 	}
 
-	final private void createFunctions(final int k) {
-		if (/*k > 31*/ true) {
+	final public void createFunctions(final int k) {
+		if (k > 31) {
 			xFunction = r.nextInt();
 			yFunction = r.nextInt();
 		} else {
@@ -111,16 +111,16 @@ final public class MillionFunction implements Runnable {
 	}
 
 	final public double calcDeviation(final int runTime) {
-		double simpleTime = 0;
-                
+		int simpleTime = 0;
+
 		for (int i = 0; i < runTime; ++i) {
-                        createY(createA());
-			int answer0 = x ^ xFunction;
-			int answer1 = y ^ yFunction;
+			createY(createA());
+			int answer0 = x & xFunction;
+			int answer1 = y & yFunction;
 			byte sign0 = 0, sign1 = 0;
 			for (int j = 0; j < 32; ++j) {
 				if ((answer0 & 1) == 1)
-					sign0 ^= 1;
+					sign0 += 1;
 				if ((answer1 & 1) == 1)
 					sign1 ^= 1;
 				answer0 >>= 1;
@@ -129,7 +129,8 @@ final public class MillionFunction implements Runnable {
 			if (((sign1 ^ sign0) & 1) == 1)
 				++simpleTime;
 		}
-		return Math.abs(((double)simpleTime) / ((double) runTime) - 0.5);
+//		System.out.println(simpleTime + " " + runTime);
+		return Math.abs(((double) simpleTime) / ((double) runTime) - 0.5);
 	}
 
 	final public void sort(final double deviationx) {
@@ -162,7 +163,7 @@ final public class MillionFunction implements Runnable {
 
 	final public void runFuctions() {
 		for (int k = 0; k < FunctionNumbers; ++k) {
-			
+
 			createFunctions(k);
 			sort(calcDeviation(runTime));
 		}

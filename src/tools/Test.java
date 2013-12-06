@@ -12,7 +12,7 @@ final public class Test {
 		// int n = Integer.parseInt(args[0]);
 		// multiThread(n);
 		// mixTest(1 << 24);
-		runMillionFunction(1, 10000, 100);
+		runMillionFunction(1, 1000000, 3);
 //		testSort();
 	}
 
@@ -83,7 +83,7 @@ final public class Test {
 
 	public static final void runMillionFunction(final int nThread,
 			final int runTime, final int functionNumber) {
-		final int length = 20;
+		final int length = 10;
 		final Object lock = new Object(), rLock = new Object();
 		final CountDownLatch cdl = new CountDownLatch(nThread);
 		final int[] highRankXFunction = new int[length];
@@ -151,4 +151,6 @@ final public class Test {
 		}
 	}
 	
+	final static void testSingleFunc() {
+	}
 }
