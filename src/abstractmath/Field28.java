@@ -21,21 +21,34 @@ public final class Field28 {
 	public final byte multiply(final byte a, final byte b) {
 		byte ret = 0, tmp;
 		for (int i = 0, j; i < 8; ++i) {
+			// if the ith bit is 0, jump 
 			if (((b >> i) & 1) == 0)
 				continue;
 			tmp = a;
+			// rotate i times if the ith bit is 1
 			for (j = 0; j < i; ++j)
 				tmp = rotateLeft(tmp);
+			// add to the result
 			ret ^= tmp;
 		}
 		return ret;
 	}
 
+	/**
+	 * @param a
+	 * @return 8-bit number after rotation one time
+	 */
 	private final byte rotateLeft(byte a) {
 		byte ret = a;
-		a = (byte) (((a & 0b1000_0000) == 0) ? 0 : -1);
+		// get the 7th(start from 0) bit of input
+		a = (byte) (((a & 0b1000_0000) == 0) ? 0 /*0000_0000*/ : -1 /*1111_1111*/ );
+		// b ^ 0 = b(same as not do ^ operation), b ^ 1 = ~b
+		// only reverse one bit when the 7th bit of input and the bit of
+		// p(the prime polynomial) on the same position are both 1
 		ret ^= (a & p);
+		// left shift
 		ret <<= 1;
+		// put the 7th bit in 0th position
 		ret |= (a & 0b1);
 		return ret;
 	}

@@ -57,49 +57,49 @@ final public class MillionFunction implements Runnable {
 	}
 
 	final public void createFunctions(final int k) {
-		if (k > 31) {
+//		if (true || k > 31) {
 			xFunction = r.nextInt();
 			yFunction = r.nextInt();
-		} else {
-			yFunction = 1;
-			yFunction <<= k;
-			switch (k / 8) {
-			case 0:
-				if (k % 8 == 0) {
-					xFunction = 0b00000001000000010000000100000000;
-				} else {
-					xFunction = 0b00000010000000100000001100000001;
-					xFunction <<= ((k % 8) - 1);
-				}
-				break;
-			case 1:
-				if (k % 8 == 0) {
-					xFunction = 0b00000001000000010000000000000001;
-				} else {
-					xFunction = 0b00000010000000110000000100000010;
-					xFunction <<= ((k % 8) - 1);
-				}
-				break;
-			case 2:
-				if (k % 8 == 0) {
-					xFunction = 0b00000001000000000000000100000001;
-				} else {
-					xFunction = 0b00000011000000010000001000000010;
-					xFunction <<= ((k % 8) - 1);
-				}
-				break;
-			case 3:
-				if (k % 8 == 0) {
-					xFunction = 0b00000000000000010000000100000001;
-				} else {
-					xFunction = 0b00000001000000100000001000000011;
-					xFunction <<= ((k % 8) - 1);
-				}
-				break;
-			default:
-				break;
-			}
-		}
+//		} else {
+//			yFunction = 1;
+//			yFunction <<= k;
+//			switch (k / 8) {
+//			case 0:
+//				if (k % 8 == 0) {
+//					xFunction = 0b00000001000000010000000100000000;
+//				} else {
+//					xFunction = 0b00000010000000100000001100000001;
+//					xFunction <<= ((k % 8) - 1);
+//				}
+//				break;
+//			case 1:
+//				if (k % 8 == 0) {
+//					xFunction = 0b00000001000000010000000000000001;
+//				} else {
+//					xFunction = 0b00000010000000110000000100000010;
+//					xFunction <<= ((k % 8) - 1);
+//				}
+//				break;
+//			case 2:
+//				if (k % 8 == 0) {
+//					xFunction = 0b00000001000000000000000100000001;
+//				} else {
+//					xFunction = 0b00000011000000010000001000000010;
+//					xFunction <<= ((k % 8) - 1);
+//				}
+//				break;
+//			case 3:
+//				if (k % 8 == 0) {
+//					xFunction = 0b00000000000000010000000100000001;
+//				} else {
+//					xFunction = 0b00000001000000100000001000000011;
+//					xFunction <<= ((k % 8) - 1);
+//				}
+//				break;
+//			default:
+//				break;
+//			}
+//		}
 	}
 
 	final public void displayx() {

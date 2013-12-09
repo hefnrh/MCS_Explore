@@ -1,5 +1,10 @@
 package tools;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
@@ -12,8 +17,8 @@ final public class Test {
 		// int n = Integer.parseInt(args[0]);
 		// multiThread(n);
 		// mixTest(1 << 24);
-		runMillionFunction(1, 1000000, 3);
-//		testSort();
+		runMillionFunction(24, 1_000_000, 50000 / 24);
+		// testSort();
 	}
 
 	public static final void multiThread(int n) {
@@ -91,10 +96,26 @@ final public class Test {
 		final double[] deviation = new double[length];
 		final MillionFunction[] mf = new MillionFunction[nThread];
 		final Random r = new Random();
-		for (int i = 0; i < length; ++i) {
-			highRankXFunction[i] = 0;
-			highRankYFunction[i] = 0;
-			deviation[i] = -1;
+		String[] lastResult = new String[11];
+		try (BufferedReader br = new BufferedReader(new FileReader("mcs.txt"));) {
+			for (int i = 0; i < 11; ++i)
+				lastResult[i] = br.readLine();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		if (lastResult[1] == null)
+			for (int i = 0; i < length; ++i) {
+				highRankXFunction[i] = 0;
+				highRankYFunction[i] = 0;
+				deviation[i] = -1;
+			}
+		else {
+			for (int i = 1; i < 11; ++i) {
+				highRankXFunction[i - 1] = toInt(lastResult[i].substring(0, 32));
+				highRankYFunction[i - 1] = toInt(lastResult[i].substring(35, 67));
+				deviation[i - 1] = Double.parseDouble(lastResult[i]
+						.substring(70));
+			}
 		}
 		for (int i = 0; i < nThread; ++i) {
 			mf[i] = new MillionFunction(highRankXFunction, highRankYFunction,
@@ -113,13 +134,30 @@ final public class Test {
 			e.printStackTrace();
 		}
 		final long end = System.currentTimeMillis();
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter("mcs.txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		int fNumber = functionNumber;
+		if (lastResult[0] != null)
+			fNumber += Integer.parseInt(lastResult[0].split("[^0-9]+")[2]);
+		long time = end - start;
+		if (lastResult[0] != null)
+			time += Long.parseLong(lastResult[0].split("[^0-9]+")[3]);
 		String msg = nThread + " threads * " + runTime + " input * "
-				+ functionNumber + " functions: " + (end - start) + " ms";
+				+ fNumber + " functions: " + time + " ms";
 		System.out.println(msg);
+		pw.println(msg);
 		for (i = 0; i < length; ++i) {
 			System.out.println(toBin(highRankXFunction[i]) + " = "
 					+ toBin(highRankYFunction[i]) + " : " + deviation[i]);
+			pw.println(toBin(highRankXFunction[i]) + " = "
+					+ toBin(highRankYFunction[i]) + " : " + deviation[i]);
 		}
+		pw.flush();
+		pw.close();
 	}
 
 	final static String toBin(int n) {
@@ -129,7 +167,7 @@ final public class Test {
 		}
 		return sb.toString();
 	}
-	
+
 	final static void testSort() {
 		int[] hx = new int[10];
 		int[] hy = new int[10];
@@ -143,14 +181,23 @@ final public class Test {
 			System.out.print(d[i] + " ");
 		}
 		tmp = 36;
-		MillionFunction mf = new MillionFunction(hx, hy, d, new Object(), null, 0, 0, null, null);
+		MillionFunction mf = new MillionFunction(hx, hy, d, new Object(), null,
+				0, 0, null, null);
 		System.out.println(tmp);
 		mf.sort(tmp);
 		for (int i = 0; i < 10; ++i) {
 			System.out.print(d[i] + " ");
 		}
 	}
-	
+
 	final static void testSingleFunc() {
+	}
+
+	final static int toInt(String s) {
+		int ret = 0;
+		for (int i = 0; i < 32; ++i) {
+			ret = (ret << 1) | (s.charAt(i) - '0');
+		}
+		return ret;
 	}
 }
