@@ -41,7 +41,7 @@ public final class Field28 {
 	private final byte rotateLeft(byte a) {
 		byte ret = a;
 		// get the 7th(start from 0) bit of input
-		a = (byte) (((a & 0b1000_0000) == 0) ? 0 /*0000_0000*/ : -1 /*1111_1111*/ );
+		a >>= 7;
 		// b ^ 0 = b(same as not do ^ operation), b ^ 1 = ~b
 		// only reverse one bit when the 7th bit of input and the bit of
 		// p(the prime polynomial) on the same position are both 1
