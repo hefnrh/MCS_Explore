@@ -19,17 +19,11 @@ public final class Field28 {
 	 * @return (a * b) % identifier in GF(2^8)
 	 */
 	public final byte multiply(final byte a, final byte b) {
-		byte ret = 0, tmp;
-		for (int i = 0, j; i < 8; ++i) {
+		byte ret = 0, tmp = a;
+		for (int i = 0, j; i < 8; ++i, tmp = rotateLeft(tmp)) {
 			// if the ith bit is 0, jump 
-			if (((b >> i) & 1) == 0)
-				continue;
-			tmp = a;
-			// rotate i times if the ith bit is 1
-			for (j = 0; j < i; ++j)
-				tmp = rotateLeft(tmp);
-			// add to the result
-			ret ^= tmp;
+			if (((b >> i) & 1) != 0)
+				ret ^= tmp;
 		}
 		return ret;
 	}
